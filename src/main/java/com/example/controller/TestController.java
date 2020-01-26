@@ -44,7 +44,7 @@ public class TestController {
 
 	@PostMapping("/owner_flat_details")
 	public ResponseEntity<?> owner_flat_details(@RequestBody String object){
-		logger_.info(object);
+		logger_.info(""+object);
 		String response = testService.owner_flat_details(object);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
