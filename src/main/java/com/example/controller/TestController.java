@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,29 @@ public class TestController {
 
 	@Autowired 
 	IService testService;
+	
+	
+	/*TESTING API FOR CHECKING CONNECTION*/
 	@GetMapping("/test")
 	public ResponseEntity<?> test(){
 		logger_.info("TEST SUCCESS ");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	
+	/*BASIC REGISTRATION  API FOR TENANT & OWNER*/
 	@PostMapping("/basic_info_registration")
-	public ResponseEntity<?> insertData(@RequestBody String object,@RequestParam String password){
-		String response=testService.basic_info_registration(object,password);
+	public ResponseEntity<?> insertData(@RequestBody String object,@RequestHeader String password){
+		String response = null;
+		try {
+			response = testService.basic_info_registration(object,password);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
-	
+	/*LOGIN API FOR TENANT & OWNER*/
 	@GetMapping("/login")
 	public ResponseEntity<?> login(@RequestParam String email,@RequestHeader String password,@RequestParam String type){
 		String status=null;
@@ -42,10 +52,23 @@ public class TestController {
 		return new ResponseEntity<>(status,HttpStatus.OK);
 	}
 
-	@PostMapping("/owner_flat_details")
+	/*
+	 * API FOR PUTTING ADVANCE DETAILS OF OWNER. 
+	 * THIS API WILL BE CALL AFTER OWNER LOGIN.
+	 **/
+	@PostMapping("/register_owner_flat_details")
 	public ResponseEntity<?> owner_flat_details(@RequestBody String object){
 		logger_.info(""+object);
 		String response = testService.owner_flat_details(object);
 		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+/*	AFTER OWNER SUCCESSFULL LOGIN, 
+ * 	THIS API WILL BE CALLED
+ * */
+	@GetMapping("/get_login_details")
+	public ResponseEntity<?> get_login_details(@RequestParam String id){
+		String response  = testService.getLoginDetails(id);
+	return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 }

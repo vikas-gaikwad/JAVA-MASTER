@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.regex.Pattern;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class TestService implements IService {
 	 * #############################################################################
 	 */
 	@Override
-	public String basic_info_registration(String object, String password) {
+	public String basic_info_registration(String object, String password) throws JSONException {
 		/*
 		 * VALIDATING ALL INCOMING FIELDS FROM OBJECT THEN PERFORM THE OPERATION
 		 */
@@ -106,19 +107,32 @@ public class TestService implements IService {
 	@Override
 	public String owner_flat_details(String object) {
 		RowMapper rowMapper = new RowMapper();
-		JSONObject json = new  JSONObject(object);
-		rowMapper.setFlat_number(json.getString("flat_number"));
-		rowMapper.setBulding_name(json.getString("bulding_name"));
-		rowMapper.setPlot_number(json.getString("plot_number"));
-		rowMapper.setLandmark(json.getString("landmark"));
-		rowMapper.setCity(json.getString("city"));
-		rowMapper.setTaluka(json.getString("taluka"));
-		rowMapper.setDistrict(json.getString("district"));
-		rowMapper.setState(json.getString("state"));
-		rowMapper.setId(json.getInt("id"));
+		JSONObject json;
+		try {
+			json = new  JSONObject(object);
+			rowMapper.setFlat_number(json.getString("flat_number"));
+			rowMapper.setBulding_name(json.getString("bulding_name"));
+			rowMapper.setPlot_number(json.getString("plot_number"));
+			rowMapper.setLandmark(json.getString("landmark"));
+			rowMapper.setCity(json.getString("city"));
+			rowMapper.setTaluka(json.getString("taluka"));
+			rowMapper.setDistrict(json.getString("district"));
+			rowMapper.setState(json.getString("state"));
+			rowMapper.setId(json.getInt("id"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		return testRepository.owner_flat_details(rowMapper);
 		 
+	}
+
+
+	@Override
+	public String getLoginDetails(String id) {
+return testRepository.getLoginDetails(id);		
 	}
 
 }

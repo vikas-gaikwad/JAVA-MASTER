@@ -12,4 +12,6 @@ public interface IRepository {
 
 	String owner_flat_details(RowMapper rowMapper);
 
+	String getLoginDetails(String id);
+
 }

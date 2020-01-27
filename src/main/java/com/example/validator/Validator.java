@@ -1,5 +1,6 @@
 package com.example.validator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.pojo.RowMapper;
@@ -10,7 +11,13 @@ public class Validator<T,U> {
 	public  String validateFormData( T entity,U password){
 		String validationStatus="{\"status\":\"200\",\"field\": \"working fine\",\"reason\": \"done successfully\"}";
 		
-	JSONObject json = new JSONObject(entity.toString());
+	JSONObject json = null;
+	try {
+		json = new JSONObject(entity.toString());
+	} catch (JSONException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	
 	try {
 		json.getString("email");

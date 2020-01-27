@@ -3,6 +3,7 @@ package com.example.repository;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,13 +85,25 @@ public class TestRepository implements IRepository{
 			userData=null;
 		}
 		 if(userData.size()>0) {
-			 json.put("status", "Success");
-			 json.put("message", "Login Success");
-			 json.put("loginData", userData);
+			 try {
+				json.put("status", "Success");
+				json.put("message", "Login Success");
+				 json.put("loginData", userData);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
 		 }else {
-			 json.put("status", "Fail");
-			 json.put("message", "Login Fail, Chack Email & Password & Type");
-		 }
+			 try {
+				json.put("status", "Fail");
+				 json.put("message", "Login Fail, Chack Email & Password & Type");
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					 }
 		  return json.toString();
 	}
 
@@ -124,10 +137,50 @@ public class TestRepository implements IRepository{
 				count==1   	?   "{\"status\": \"Success\",\"reason\": \"Registration Success\"}"
 							:	"{\"status\": \"Fail\",\"reason\": \"Registration Fail, Something Went Wrong.\"}";
 		
-		j.put("response", status);
+		try {
+			j.put("response", status);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		return j.toString();
+	}
+
+
+	@Override
+	public String getLoginDetails(String id) {
+		List<Map<String,Object>> getDetails=null;
+		JSONObject j=new JSONObject();
+		String GET_ALL_DETAILS_OF_LOGIN_USER = 
+				"select "
+				+ "b.name,b.type,b.createdAt,"
+				+ "a.flat_id,a.flat_number,a.bulding_name,a.plot_number,a.landmark,a.city,a.taluka,a.district,a.state,a.createdAt,a.updatedAt "
+				+ "from basic_info b inner join adv_details a on b.id=a.id where b.id=?";
+		try {
+			getDetails = jdbcTemplate.queryForList(GET_ALL_DETAILS_OF_LOGIN_USER, id);
+		} catch (Exception e) {
+			getDetails=null;		
+		}
+		if(getDetails.size()>0) {
+			try {
+				j.put("data", getDetails);
+				j.put("message", "Success");
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		else {
+			try {
+				j.put("message", "No Data Found For This User");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return j.toString();
+		
 	}
 
 }
