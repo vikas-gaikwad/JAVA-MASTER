@@ -30,6 +30,8 @@ public class TestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	 // #############################################################################
+	
 	/*BASIC REGISTRATION  API FOR TENANT & OWNER*/
 	@PostMapping("/basic_info_registration")
 	public ResponseEntity<?> insertData(@RequestBody String object,@RequestHeader String password){
@@ -43,6 +45,9 @@ public class TestController {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
+	
+	 // #############################################################################  
+	
 	/*LOGIN API FOR TENANT & OWNER*/
 	@GetMapping("/login")
 	public ResponseEntity<?> login(@RequestParam String email,@RequestHeader String password,@RequestParam String type){
@@ -52,6 +57,8 @@ public class TestController {
 		return new ResponseEntity<>(status,HttpStatus.OK);
 	}
 
+	 // #############################################################################
+	
 	/*
 	 * API FOR PUTTING ADVANCE DETAILS OF OWNER. 
 	 * THIS API WILL BE CALL AFTER OWNER LOGIN.
@@ -63,6 +70,9 @@ public class TestController {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
+	 // #############################################################################
+	
+	
 /*	AFTER OWNER SUCCESSFULL LOGIN, 
  * 	THIS API WILL BE CALLED
  * */
@@ -71,4 +81,7 @@ public class TestController {
 		String response  = testService.getLoginDetails(id);
 	return new ResponseEntity<>(response,HttpStatus.OK);
 	}
+	
+	 // #############################################################################
+	
 }

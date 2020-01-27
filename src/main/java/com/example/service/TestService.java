@@ -75,14 +75,16 @@ public class TestService implements IService {
 	}
 
 	
-	/*
-	 * #############################################################################
-	 */
+	
+	 // #############################################################################
+	 
+	
 	public String checkIfAlreadyRegistered(String emailID) {
 		return testRepository.checkIfAlreadyRegistered(emailID);
 	}
 
-
+	 // #############################################################################
+	
 	@Override
 	public String login(String email, String password,String type) {
 		Boolean check=regexCheck.validate(email);
@@ -103,7 +105,8 @@ public class TestService implements IService {
 		
 	}
 
-
+	 // #############################################################################
+	
 	@Override
 	public String owner_flat_details(String object) {
 		RowMapper rowMapper = new RowMapper();
@@ -129,10 +132,11 @@ public class TestService implements IService {
 		 
 	}
 
-
+	 // #############################################################################
+	
 	@Override
 	public String getLoginDetails(String id) {
-return testRepository.getLoginDetails(id);		
+			return testRepository.getLoginDetails(id);		
 	}
 
 }

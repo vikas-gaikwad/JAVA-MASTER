@@ -22,9 +22,7 @@ public class TestRepository implements IRepository{
 	static Logger logger_=LoggerFactory.getLogger(TestService.class);
 	
 	
-	/*
-	 * #############################################################################
-	 */
+	 // #############################################################################
 
 	@Override
 	public String basic_info_registration(RowMapper rowMapper) {
@@ -57,9 +55,7 @@ public class TestRepository implements IRepository{
 	}
 
 
-	/*
-	 * #############################################################################
-	 */
+	 // #############################################################################
 	@Override
 	public String checkIfAlreadyRegistered(String emailID) {
 		String  check=null;
@@ -72,7 +68,7 @@ public class TestRepository implements IRepository{
 		return check;
 	}
 
-
+	 // #############################################################################
 	@Override
 	public String login(String email, String password,String type) {
 		List<Map<String, Object>> userData=null;
@@ -107,7 +103,7 @@ public class TestRepository implements IRepository{
 		  return json.toString();
 	}
 
-
+	 // #############################################################################
 	@Override
 	public String owner_flat_details(RowMapper rowMapper) {
 		System.out.println(rowMapper.toString());
@@ -148,7 +144,7 @@ public class TestRepository implements IRepository{
 		return j.toString();
 	}
 
-
+	 // #############################################################################
 	@Override
 	public String getLoginDetails(String id) {
 		List<Map<String,Object>> getDetails=null;
